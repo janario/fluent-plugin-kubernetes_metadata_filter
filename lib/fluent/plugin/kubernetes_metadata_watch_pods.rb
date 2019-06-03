@@ -28,11 +28,8 @@ module KubernetesMetadata
       begin
         field_selector   = k8s_node_name ? "spec.nodeName=#{k8s_node_name}" : nil
 
-        # FIXME: limit seems to not take effect
-        # resource_version = @client.get_pods(limit: 1).resourceVersion
-        # watcher          = @client.watch_pods(resource_version: resource_version, field_selector: field_selector)
-
-        watcher          = @client.watch_pods(field_selector: field_selector)
+        resource_version = @client.get_pods(limit: 1).resourceVersion
+        watcher          = @client.watch_pods(resource_version: resource_version, field_selector: field_selector)
       rescue Exception => e
         message = "Exception encountered fetching metadata from Kubernetes API endpoint: #{e.message}"
         message += " (#{e.response})" if e.respond_to?(:response)
