@@ -164,7 +164,6 @@ module Fluent::Plugin
       end
 
       require 'kubeclient'
-      require 'active_support/core_ext/object/blank'
       require 'lru_redux'
       @stats = KubernetesMetadata::Stats.new
 
